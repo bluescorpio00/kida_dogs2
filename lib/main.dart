@@ -1,6 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -13,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'my app',
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: const Color.fromARGB(255, 149, 216, 250),
+        colorSchemeSeed: const Color.fromARGB(255, 11, 20, 24),
         scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       home: const FirstPage(),
@@ -49,13 +57,15 @@ class FirstPage extends StatelessWidget {
                       MaterialPageRoute(builder: (_) => const SecondPage()));
                 },
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 4, 21, 105)),
-                child: const Text(
+                    backgroundColor: const Color.fromARGB(255, 1, 16, 91)),
+                child: Text(
                   'START',
-                  style: TextStyle(
-                      fontFamily: 'Coiny',
+                  style: GoogleFonts.patuaOne(
+                    textStyle: const TextStyle(
                       fontSize: 20,
-                      color: Color.fromARGB(255, 255, 255, 255)),
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    ),
+                  ),
                 ),
               ),
             )
@@ -73,12 +83,37 @@ class SecondPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-        ),
-      ),
-    );
+    return StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          final user = snapshot.data;
+          if (user == null) {
+            return const Scaffold(
+              body: Center(
+                child: Text('Jesteś niezalogowany'),
+              ),
+            );
+          }
+          return Scaffold(
+            appBar: AppBar(
+                leading: IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    color: const Color.fromARGB(255, 1, 16, 91),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const FirstPage()));
+                    }),
+                title: Text(
+                  'Logowanie',
+                  style: GoogleFonts.patuaOne(
+                    textStyle: const TextStyle(
+                        color: Color.fromARGB(255, 1, 16, 91), fontSize: 20),
+                  ),
+                )),
+            body: Center(
+              child: Text('Jesteś niezalogowany jako ${user.email}'),
+            ),
+          );
+        });
   }
 }

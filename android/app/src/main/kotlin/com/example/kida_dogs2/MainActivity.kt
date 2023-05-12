@@ -1,4 +1,4 @@
-package com.example.kida_dogs2
+package com.olakida.kida_dogs2
 
 import io.flutter.embedding.android.FlutterActivity
 

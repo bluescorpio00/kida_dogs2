@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "985712871797",
+    "project_id": "kidadogs2",
+    "storage_bucket": "kidadogs2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985712871797:android:b17a57c7bdee8889dfeb3c",
+        "android_client_info": {
+          "package_name": "com.olakida.kida_dogs2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985712871797-8p4tv899s4gpcejrjjrq44p3eturkif1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS4M8wMTyTFFP8yPrmVq4-jAbqIQCTHVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985712871797-8p4tv899s4gpcejrjjrq44p3eturkif1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "985712871797-j7m9bo68q82sfb8amlqs621kiahur611.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.olakida.kidaDogs2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

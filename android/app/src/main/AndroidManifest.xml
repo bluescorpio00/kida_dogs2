@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kida_dogs2">
+    package="com.olakida.kida_dogs2">
    <application
         android:label="kida_dogs2"
         android:name="${applicationName}"
