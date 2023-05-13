@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:kida_dogs2/app/home/home_page.dart';
 import 'firebase_options.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -73,47 +73,5 @@ class FirstPage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  const SecondPage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          final user = snapshot.data;
-          if (user == null) {
-            return const Scaffold(
-              body: Center(
-                child: Text('Jesteś niezalogowany'),
-              ),
-            );
-          }
-          return Scaffold(
-            appBar: AppBar(
-                leading: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    color: const Color.fromARGB(255, 1, 16, 91),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => const FirstPage()));
-                    }),
-                title: Text(
-                  'Logowanie',
-                  style: GoogleFonts.patuaOne(
-                    textStyle: const TextStyle(
-                        color: Color.fromARGB(255, 1, 16, 91), fontSize: 20),
-                  ),
-                )),
-            body: Center(
-              child: Text('Jesteś niezalogowany jako ${user.email}'),
-            ),
-          );
-        });
   }
 }
