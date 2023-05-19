@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
         builder: (context, snapshot) {
           final user = snapshot.data;
           if (user == null) {
-            return const UserPage();
+            return  UserPage();
           }
           return HomePage(user: user);
         });
