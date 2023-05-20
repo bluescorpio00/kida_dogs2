@@ -2,13 +2,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class UserPage extends StatelessWidget {
+class UserPage extends StatefulWidget {
   UserPage({
     super.key,
   });
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  @override
+  State<UserPage> createState() => _UserPageState();
+}
+
+class _UserPageState extends State<UserPage> {
+  var errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,7 @@ class UserPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(100)),
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 10)),
-              controller: emailController,
+              controller: widget.emailController,
             ),
             const SizedBox(
               height: 10,
@@ -47,9 +54,13 @@ class UserPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(100)),
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 10)),
-              controller: passwordController,
+              controller: widget.passwordController,
               obscureText: true,
             ),
+            SizedBox(
+              height: 40,
+            ),
+            Text(errorMessage),
             const SizedBox(
               height: 40,
             ),
@@ -60,10 +71,12 @@ class UserPage extends StatelessWidget {
                 onPressed: () async {
                   try {
                     await FirebaseAuth.instance.signInWithEmailAndPassword(
-                        email: emailController.text,
-                        password: passwordController.text);
+                        email: widget.emailController.text,
+                        password: widget.passwordController.text);
                   } catch (error) {
-                    print(error);
+                    setState(() {
+                      errorMessage = 'Coś poszło nie tak';
+                    });
                   }
                 },
                 style: ElevatedButton.styleFrom(
