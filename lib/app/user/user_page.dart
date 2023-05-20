@@ -16,6 +16,7 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   var errorMessage = '';
+  var isCreatingAccount = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,9 @@ class _UserPageState extends State<UserPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Witaj w KIDA DOGS!',
+              isCreatingAccount == true
+                  ? 'Zarejestruj sie'
+                  : 'Witaj w KIDA DOGS!',
               style: GoogleFonts.patuaOne(
                   fontSize: 30,
                   textStyle: TextStyle(color: Color.fromARGB(255, 1, 16, 91))),
@@ -69,6 +72,31 @@ class _UserPageState extends State<UserPage> {
               height: 50,
               child: ElevatedButton(
                 onPressed: () async {
+                  if (isCreatingAccount == true) {
+                    //rejestracja
+                    try {
+                      await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                              email: widget.emailController.text,
+                              password: widget.passwordController.text);
+                    } catch (error) {
+                      setState(() {
+                        errorMessage = 'Coś poszło nie tak';
+                      });
+                    }
+                  } else {
+                    //logowanie
+                    try {
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          email: widget.emailController.text,
+                          password: widget.passwordController.text);
+                    } catch (error) {
+                      setState(() {
+                        errorMessage = 'Coś poszło nie tak';
+                      });
+                    }
+                  }
+
                   try {
                     await FirebaseAuth.instance.signInWithEmailAndPassword(
                         email: widget.emailController.text,
@@ -81,13 +109,35 @@ class _UserPageState extends State<UserPage> {
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 1, 16, 91)),
-                child: Text('Zaloguj',
+                child: Text(
+                    isCreatingAccount == true ? 'Zarejestruj' : 'Zaloguj',
                     style: GoogleFonts.patuaOne(
                         fontSize: 17,
                         textStyle: const TextStyle(
                             color: Color.fromARGB(255, 255, 255, 255)))),
               ),
             ),
+            const SizedBox(
+              height: 40,
+            ),
+            if (isCreatingAccount == false) ...[
+              TextButton(
+                  onPressed: () {
+                    setState(() {
+                      isCreatingAccount = true;
+                    });
+                  },
+                  child: Text('Utwórz konto'))
+            ],
+            if (isCreatingAccount == true) ...[
+              TextButton(
+                  onPressed: () {
+                    setState(() {
+                      isCreatingAccount = false;
+                    });
+                  },
+                  child: const Text('Masz już konto?'))
+            ]
           ],
         ),
       ),
