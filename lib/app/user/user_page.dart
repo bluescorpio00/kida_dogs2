@@ -127,7 +127,12 @@ class _UserPageState extends State<UserPage> {
                       isCreatingAccount = true;
                     });
                   },
-                  child: Text('Utwórz konto'))
+                  child: Text(
+                    'Utwórz konto',
+                    style: GoogleFonts.patuaOne(
+                        textStyle: const TextStyle(
+                            color: Color.fromARGB(255, 1, 16, 91))),
+                  ))
             ],
             if (isCreatingAccount == true) ...[
               TextButton(
@@ -136,7 +141,10 @@ class _UserPageState extends State<UserPage> {
                       isCreatingAccount = false;
                     });
                   },
-                  child: const Text('Masz już konto?'))
+                  child: Text('Masz juz konto?',
+                      style: GoogleFonts.patuaOne(
+                          textStyle: const TextStyle(
+                              color: Color.fromARGB(255, 1, 16, 91)))))
             ]
           ],
         ),

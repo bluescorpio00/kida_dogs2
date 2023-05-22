@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
         builder: (context, snapshot) {
           final user = snapshot.data;
           if (user == null) {
-            return  UserPage();
+            return UserPage();
           }
           return HomePage(user: user);
         });
@@ -63,7 +63,20 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: Text('Jesteś zalogowany jako ${user.email}'),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Jesteś zalogowany jako ${user.email}'),
+          const SizedBox(
+            height: 40,
+          ),
+          ElevatedButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: const Text('Wyloguj'))
+        ],
+      ),
     ));
   }
 }
