@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: const Color.fromARGB(255, 11, 20, 24),
-        scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        scaffoldBackgroundColor: Color.fromARGB(255, 249, 249, 251),
       ),
       home: const FirstPage(),
     );
@@ -43,10 +43,10 @@ class FirstPage extends StatelessWidget {
           children: [
             const Image(
               image: AssetImage('images/Przezroczysty.png'),
-              width: 250,
+              width: 300,
             ),
             const SizedBox(
-              height: 150,
+              height: 100,
             ),
             SizedBox(
               width: 150,

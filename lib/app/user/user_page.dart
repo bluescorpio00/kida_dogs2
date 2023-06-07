@@ -4,8 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 class UserPage extends StatefulWidget {
   UserPage({
+    required this.changeTitle,
     super.key,
   });
+  final Function(bool) changeTitle;
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -20,8 +22,7 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
+    return Center(
       child: Padding(
         padding: const EdgeInsets.all(50.0),
         child: Column(
@@ -29,13 +30,14 @@ class _UserPageState extends State<UserPage> {
           children: [
             Text(
               isCreatingAccount == true
-                  ? 'Zarejestruj sie'
+                  ? 'Zarejestruj się'
                   : 'Witaj w KIDA DOGS!',
-              style: GoogleFonts.patuaOne(
+              style: GoogleFonts.calistoga(
                   fontSize: 30,
-                  textStyle: TextStyle(color: Color.fromARGB(255, 1, 16, 91))),
+                  textStyle:
+                      const TextStyle(color: Color.fromARGB(255, 1, 16, 91))),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             TextField(
@@ -60,12 +62,12 @@ class _UserPageState extends State<UserPage> {
               controller: widget.passwordController,
               obscureText: true,
             ),
-            SizedBox(
-              height: 40,
+            const SizedBox(
+              height: 20,
             ),
             Text(errorMessage),
             const SizedBox(
-              height: 40,
+              height: 20,
             ),
             SizedBox(
               width: 150,
@@ -96,40 +98,31 @@ class _UserPageState extends State<UserPage> {
                       });
                     }
                   }
-
-                  try {
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
-                        email: widget.emailController.text,
-                        password: widget.passwordController.text);
-                  } catch (error) {
-                    setState(() {
-                      errorMessage = 'Coś poszło nie tak';
-                    });
-                  }
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 1, 16, 91)),
                 child: Text(
                     isCreatingAccount == true ? 'Zarejestruj' : 'Zaloguj',
-                    style: GoogleFonts.patuaOne(
+                    style: GoogleFonts.calistoga(
                         fontSize: 17,
                         textStyle: const TextStyle(
                             color: Color.fromARGB(255, 255, 255, 255)))),
               ),
             ),
             const SizedBox(
-              height: 40,
+              height: 30,
             ),
             if (isCreatingAccount == false) ...[
               TextButton(
                   onPressed: () {
                     setState(() {
+                      widget.changeTitle(false);
                       isCreatingAccount = true;
                     });
                   },
                   child: Text(
                     'Utwórz konto',
-                    style: GoogleFonts.patuaOne(
+                    style: GoogleFonts.calistoga(
                         textStyle: const TextStyle(
                             color: Color.fromARGB(255, 1, 16, 91))),
                   ))
@@ -138,17 +131,18 @@ class _UserPageState extends State<UserPage> {
               TextButton(
                   onPressed: () {
                     setState(() {
+                      widget.changeTitle(true);
                       isCreatingAccount = false;
                     });
                   },
-                  child: Text('Masz juz konto?',
-                      style: GoogleFonts.patuaOne(
+                  child: Text('Masz już konto?',
+                      style: GoogleFonts.calistoga(
                           textStyle: const TextStyle(
                               color: Color.fromARGB(255, 1, 16, 91)))))
             ]
           ],
         ),
       ),
-    ));
+    );
   }
 }
