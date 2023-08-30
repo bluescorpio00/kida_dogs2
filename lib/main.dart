@@ -1,77 +1,44 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:kida_dogs2/app/home/home_page.dart';
+import 'package:kida_dogs2/app/login/login_page.dart';
 import 'firebase_options.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'my app',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: const Color.fromARGB(255, 11, 20, 24),
-        scaffoldBackgroundColor: Color.fromARGB(255, 249, 249, 251),
-      ),
-      home: const FirstPage(),
+      theme: ThemeData(),
+      home: const RootPage(),
     );
   }
 }
 
-class FirstPage extends StatelessWidget {
-  const FirstPage({
-    Key? key,
-  }) : super(key: key);
+class RootPage extends StatelessWidget {
+  const RootPage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Image(
-              image: AssetImage('images/Przezroczysty.png'),
-              width: 300,
-            ),
-            const SizedBox(
-              height: 100,
-            ),
-            SizedBox(
-              width: 150,
-              height: 60,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const SecondPage()));
-                },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 1, 16, 91)),
-                child: Text(
-                  'START',
-                  style: GoogleFonts.patuaOne(
-                    textStyle: const TextStyle(
-                      fontSize: 20,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+    return StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          final user = snapshot.data;
+          if (user == null) {
+            return LoginPage();
+          }
+          return HomePage(user: user);
+        });
   }
 }
