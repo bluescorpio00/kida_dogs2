@@ -28,9 +28,9 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Image(
-                  image: AssetImage('images/Transparent.png'), width: 250),
+                  image: AssetImage('images/Transparent.png'), width: 195),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               TextField(
                 controller: widget.emailController,
@@ -42,11 +42,11 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               Text(errorMessage),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               ElevatedButton(
                   onPressed: () async {
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                       ? 'Zarejestruj się'
                       : 'Zaloguj się')),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               if (isCreatinAccount == false) ...[
                 TextButton(
